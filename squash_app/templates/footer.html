@@ -1,0 +1,70 @@
+<!--Footer-->
+<div class="my-5" style="max-height: 200px"></div>
+<footer class="bg-light text-lg-start footer mt-md-auto">
+    <div class="bg-secondary">
+        <section class="container pt-2">
+            <div class="row">
+                <ul class="nav col-8 d-none d-md-inline-flex">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'club-list' %}">Club Search</a>
+                    </li>
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'club-create' %}">Create Club</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile-update' %}">Manage Account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'my-clubs' %}">Manage Club</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <div class="pb-4 align-items-end text-end col-md-4 d-inline-flex flex-row-reverse col-sm-12">
+                    {# Follow Squash Clubs on social media#}
+                    <a href="https://www.youtube.com/" class="btn btn-primary m-1" role="button" rel="nofollow"
+                        target="_blank">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="https://www.facebook.com/" class="btn btn-primary m-1" role="button" rel="nofollow"
+                        target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/" class="btn btn-primary m-1" role="button" rel="nofollow"
+                        target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://twitter.com/" class="btn btn-primary m-1" role="button" rel="nofollow"
+                        target="_blank">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://linkedin.com/" class="btn btn-primary m-1" role="button" rel="nofollow"
+                        target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <!-- Copyright -->
+    <div class="text-center p-3 red-bg">
+        © {% now 'Y' %} Copyright:
+        <a class="text-light" href="https://google.com/tips23" target="_blank">anthony</a>
+    </div>
+    <!-- Copyright -->
+</footer>
