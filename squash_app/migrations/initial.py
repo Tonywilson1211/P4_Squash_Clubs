@@ -44,3 +44,169 @@ class Migration(migrations.Migration):
                         verbose_name="Session Location",
                     ),
                 ),
+                (
+                    "image_path",
+                    models.ImageField(
+                        null=True, upload_to="clubs/", verbose_name="Profile Image"
+                    ),
+                ),
+                (
+                    "skill_level",
+                    multiselectfield.db.fields.MultiSelectField(
+                        choices=[
+                            ("beginner", "Beginner"),
+                            ("junior", "Junior"),
+                            ("intermediate", "Intermediate"),
+                            ("senior", "Senior"),
+                        ],
+                        default="beginner",
+                        max_length=100,
+                        verbose_name="Skill Level",
+                    ),
+                ),
+                (
+                    "session_days",
+                    multiselectfield.db.fields.MultiSelectField(
+                        choices=[
+                            (1, "Monday"),
+                            (2, "Tuesday"),
+                            (3, "Wednesday"),
+                            (4, "Thursday"),
+                            (5, "Friday"),
+                            (6, "Saturday"),
+                            (7, "Sunday"),
+                        ],
+                        default="Sunday",
+                        max_length=100,
+                        verbose_name="Session Days",
+                    ),
+                ),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[("1", "Active"), ("2", "Inactive")],
+                        default=1,
+                        max_length=1,
+                    ),
+                ),
+                ("delete_flag", models.IntegerField(default=0)),
+                ("date_created", models.DateTimeField(auto_now=True)),
+                (
+                    "owner",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="clubs",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+            ],
+            options={"verbose_name_plural": "List of Clubs", },
+        ),
+        migrations.CreateModel(
+            name="Profile",
+            fields=[
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("display_name", models.CharField(max_length=100)),
+                ("date_of_birth", models.DateField()),
+                ("profile_picture", models.ImageField(upload_to="pp/%Y/%m")),
+                ("show_date_of_birth", models.BooleanField(default=False)),
+                ("show_email_address", models.BooleanField(default=False)),
+                ("show_joined_date", models.BooleanField(default=False)),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="profile",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+            ],
+            options={"verbose_name": "Profile",
+                     "verbose_name_plural": "Profiles", },
+        ),
+        migrations.CreateModel(
+            name="Comment",
+            fields=[
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("content", models.TextField()),
+                ("created_on", models.DateTimeField(auto_now_add=True)),
+                (
+                    "club",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="comments",
+                        to="squash_app.club",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="comments",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+            ],
+            options={
+                "verbose_name_plural": "List of Comments",
+                "ordering": ["created_on"],
+            },
+        ),
+        migrations.CreateModel(
+            name="ClubMember",
+            fields=[
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "status",
+                    models.IntegerField(
+                        choices=[
+                            (1, "Join Requested"),
+                            (2, "Approved"),
+                            (2, "Rejected"),
+                        ]
+                    ),
+                ),
+                ("joined_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "club",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="members",
+                        to="squash_app.club",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="membership",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+            ],
+        ),
+    ]
