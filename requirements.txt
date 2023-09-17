@@ -1,0 +1,9 @@
+Django==4.2.5
+django-bootstrap-v5
+django-bootstrap-datepicker-plus
+cryptography
+django-multiselectfield
+django-multi-form-view
+django-star-ratings
+Pillow
+six
